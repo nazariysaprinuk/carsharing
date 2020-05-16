@@ -1,0 +1,191 @@
+.divider {
+  border-top: 1px solid #d9dadc;
+  display: block;
+  line-height: 1px;
+  margin: 15px 0;
+  position: relative;
+  text-align: center;
+  margin: 30px 0;
+}
+
+.app-header {
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+}
+mat-card-content {
+  margin-bottom: 16px;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 0.8375em 0;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: rgb(217, 218, 220) !important;
+  color: rgb(217, 218, 220) !important;
+}
+
+::ng-deep .mat-form-field-empty.mat-form-field-label {
+  color: rgb(145, 145, 145);
+}
+
+::ng-deep .mat-checkbox-frame {
+  border-color: #c2185b;
+}
+
+::ng-deep .mat-checkbox-checkmark-path {
+  stroke: #fff !important;
+}
+
+::ng-deep .mat-checkbox-label {
+  color: #4e5153;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+} 
+
+.background {
+  background-image: url("http://prod-upp-image-read.ft.com/75f94f02-be86-11e9-9381-78bab8a70848") !important;
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-wrapper {
+  height: 100%;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-wrapper mat-card {
+  padding: 5vh 5.9vw 6vh;
+  border-radius: 6px;
+}
+
+.positronx {
+  text-decoration: none;
+  /* color: #ffffff; */
+}
+.box {
+  position: relative;
+  top: 0;
+  opacity: 1;
+  float: left;
+  padding: 60px 50px 40px 50px;
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  z-index: 5;
+  max-width: 330px;
+}
+.box.back {
+  transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  top: -20px;
+  opacity: 0.8;
+  z-index: -1;
+}
+.box:before {
+  content: "";
+  width: 100%;
+  height: 30px;
+  border-radius: 10px;
+  position: absolute;
+  top: -10px;
+  background: rgba(255, 255, 255, 0.7);
+  left: 0;
+  transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  z-index: -1;
+}
+.login-wrapper .example-form {
+  min-width: 100%;
+  max-width: 300px;
+  width: 100%;
+}
+.login-wrapper .example-full-width,
+.login-wrapper .btn-block {
+  width: 100%;
+}
+.login-wrapper mat-card-header {
+  text-align: center;
+  width: 100%;
+  display: block;
+  font-weight: 700;
+}
+.login-wrapper mat-card-header mat-card-title {
+  font-size: 30px;
+  margin: 0;
+}
+.login-wrapper .mat-card {
+  padding: 40px 70px 50px;
+}
+.login-wrapper .mat-raised-button {
+  border-radius: 30px;
+  line-height: 3rem;
+  width: 50%;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+}
+
+.login-wrapper .mat-stroked-button {
+  border: 0.1rem solid #616467;
+  border-radius: 30px;
+  color: #4e5153;
+  line-height: 2.9rem;
+  background: #ffffff;
+  margin-top: 16px;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+}
+
+.login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 0.8375em 0;
+}
+
+.login-wrapper .sign-in {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-wrapper .sign-in > * {
+  align-self: center;
+}
+
+.login-wrapper .sign-up,
+.login-wrapper .forgot-pass {
+  display: flex;
+  justify-content: center;
+}
+
+.login-wrapper .sign-up {
+  font-weight: 600;
+  padding: 5px 0;
+}
+
+.login-wrapper .forgot-pass {
+  padding-top: 15px;
+}

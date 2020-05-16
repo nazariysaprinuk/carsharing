@@ -1,0 +1,30 @@
+span mat-icon {
+  margin-left: 40px;
+}
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  outline: none;
+  width: 100%;
+}
+:host .menu-list-item.active {
+  background-color:rgba(0, 0, 0, 0.87);
+  opacity: .7;
+}
+:host:hover > .menu-list-item:not(.expanded), :host:focus > .menu-list-item:not(.expanded) {
+  background-color: rgb(120, 129, 192)!important;
+}
+.menu-list-item {
+  padding: 6px;
+  display: flex;
+  width: auto;
+  cursor: pointer;
+}
+.menu-list-item .routeIcon {
+  margin-right: 40px;
+}
+
+.menu-list-item > *  {
+  margin: 10px 0;
+}

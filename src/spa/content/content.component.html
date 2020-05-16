@@ -1,0 +1,64 @@
+<mat-sidenav-container [ngClass]="screenService.isLarge()? 'container' : 'container-fluid'">
+  <mat-sidenav
+    #appDrawer
+    [mode]="screenService.isLarge() ? 'side' : 'push'"
+    [autoFocus]="false"
+    fixedInViewport="true"
+    closed
+  >
+    <div
+      class="mat-sidenav"
+      *ngIf="
+        (menuService.isVertical && screenService.isLarge()) ||
+        (!menuService.showVerticalMenu && !screenService.isLarge())
+      "
+    >
+      <spa-sidebar-menu
+        *ngFor="let item of menuService.items"
+        [item]="item"
+        class="vertical-menu"
+      ></spa-sidebar-menu>
+
+      <div *screenSmall>
+        <hr class="small-display" />
+        <spa-sidebar-menu
+          [item]="{
+            text: 'Account',
+            route: '/authenticated/account'
+          }"
+          class="vertical-menu"
+        ></spa-sidebar-menu>
+
+        <a (click)="userApi.signOut()">
+          <spa-sidebar-menu
+            [item]="{ text: 'Sign out' }"
+            class="vertical-menu"
+          ></spa-sidebar-menu>
+        </a>
+      </div>
+
+      <div *screenLarge>
+        <div [ngClass]="menuService.isVertical ? 'dropup' : 'dropleft'">
+          <button
+            mat-mini-fab
+            color="accent"
+            *ngIf="!menuService.showVerticalMenu"
+            (click)="menuService.toggleOrientation(); navService.closeNav()"
+          >
+            <mat-icon>{{
+              !menuService.isVertical
+                ? "keyboard_arrow_left"
+                : "keyboard_arrow_up"
+            }}</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content >
+    <div [ngClass]="screenService.isLarge() && !menuService.isVertical ? 'body-style' : 'body-style-small'">
+      <router-outlet></router-outlet>
+    </div>
+    <spa-footer></spa-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,67 @@
+<div *screenSmall class="chart">
+  <div>
+    <canvas
+      baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="{
+        'scaleShowVerticalLines': true,
+        'maintainAspectRatio': false,
+        'scales': {
+          'xAxes': [{
+            'gridLines': {
+              'color': 'rgba(160, 160, 160, 0.2)'
+            },
+            'ticks': {
+              'autoSkip': false,
+              'maxRotation': 90,
+              'minRotation': 90
+            }
+          }],
+          'yAxes': [
+            {
+              gridLines: {
+                color: 'rgba(160, 160, 160, 0.2)'
+              }
+            }
+          ]
+        }
+      }"
+      [legend]="barChartLegend"
+      [chartType]="barChartType"
+      style="height:40vh"
+    >
+    </canvas>
+  </div>
+</div>
+
+
+<div *screenLarge class="chart">
+  <div>
+    <canvas
+      baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="{
+        'scaleShowVerticalLines': true,
+        'scales': {
+          'xAxes': [{
+            'gridLines': {
+              'color': 'rgba(160, 160, 160, 0.3)'
+            }
+          }],
+          'yAxes': [
+            {
+              gridLines: {
+                color: 'rgba(160, 160, 160, 0.4)'
+              }
+            }
+          ]
+        }
+      }"
+      [legend]="barChartLegend"
+      [chartType]="barChartType"
+    >
+    </canvas>
+  </div>
+</div>

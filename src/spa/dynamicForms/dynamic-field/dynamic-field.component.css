@@ -1,0 +1,16 @@
+.image {
+  max-width: 45vw;
+}
+
+.imagePreview, .matInput {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-input-wrapper{
+  width:400px !important;
+}
+
+mat-form-field {
+  width: 100%;
+}

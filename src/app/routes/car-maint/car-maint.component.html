@@ -1,0 +1,260 @@
+<app-car-carousel></app-car-carousel>
+
+<mat-form-field>
+  <input
+    matInput
+    (keyup)="applyFilter($event.target.value)"
+    placeholder="Filter"
+  />
+</mat-form-field>
+
+<!-- <button mat-raised-button (click)="createCar()">Add new car</button> -->
+
+<div class="mat-elevation">
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+    <!-- ID Column -->
+    <ng-container
+      matColumnDef="{{ column }}"
+      *ngFor="let column of displayedColumns"
+    >
+      <div *ngIf="column !== 'select'">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ column | uppercase }}
+        </th>
+        <!-- [ngClass]="screenService.isLarge() ? 'element-detail' : ''" -->
+        <td mat-cell *matCellDef="let row" class="element-detail">
+          {{ row[column] }}
+        </td>
+      </div>
+      <div *ngIf="column === 'select'">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [aria-label]="checkboxLabel()"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)"
+          >
+          </mat-checkbox>
+        </td>
+      </div>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let element"
+        [attr.colspan]="displayedColumns.length"
+      >
+        <mat-card
+          [ngClass]="screenService.isLarge() ? 'large-detail' : 'small-detail'"
+          [@detailExpand]="
+            element == expandedElement ? 'expanded' : 'collapsed'
+          "
+        >
+          <!-- [ngClass]="
+                  screenService.isLarge()
+                    ? large-element-image
+                    : small-element-image
+                " -->
+          <mat-card-header>
+            <div>
+              <img
+                mat-card-image
+                [ngClass]="
+                  screenService.isLarge()
+                    ? 'large-element-image'
+                    : 'small-element-image'
+                "
+                [src]="element.image"
+              />
+            </div>
+          </mat-card-header>
+          <mat-card-content>
+            <div [ngClass]="screenService.isLarge() ? 'titleL' : 'titleS'">
+              <span
+                >{{ element.name | uppercase }}&nbsp;
+                {{ element.model | uppercase }}</span
+              >
+            </div>
+            <div
+              [ngClass]="
+                screenService.isLarge() ? 'characteristicL' : 'characteristicS'
+              "
+            >
+              <div>
+                <mat-icon
+                  *ngIf="element.type === 'SUV'"
+                  svgIcon="jeep"
+                ></mat-icon>
+                <mat-icon
+                  *ngIf="element.type === 'Van / Minibus'"
+                  svgIcon="van"
+                ></mat-icon>
+                <mat-icon
+                  *ngIf="element.type === 'Sports Car'"
+                  svgIcon="sports-car"
+                ></mat-icon>
+                <mat-icon
+                  *ngIf="
+                    element.type === 'Saloon' ||
+                    element.type === 'Coupe' ||
+                    element.type === 'EstateCar'
+                  "
+                  svgIcon="car"
+                ></mat-icon>
+                <span>{{ element.type }}</span>
+              </div>
+              <div>
+                <mat-icon svgIcon="shifter"></mat-icon>
+                <span>{{ element.engine.transmission }}</span>
+              </div>
+              <div>
+                <mat-icon
+                  [svgIcon]="
+                    element.engine.fuel_type === 'Electric'
+                      ? 'battery'
+                      : 'car-engine'
+                  "
+                ></mat-icon>
+                <span
+                  >{{ element.engine.fuel_type }},
+                  {{
+                    element.engine.fuel_type === "Electric"
+                      ? element.engine.cubic_capacity + "kW"
+                      : element.engine.cubic_capacity / 1000 + "л."
+                  }}</span
+                >
+              </div>
+              <div>
+                <mat-icon svgIcon="calendar"></mat-icon>
+                <span>{{ element.date }}</span>
+              </div>
+              <div>
+                <mat-icon svgIcon="location"></mat-icon>
+                <span class="example-element-weight">{{
+                  element.location
+                }}</span>
+              </div>
+              <div>
+                <mat-icon svgIcon="painted-car"></mat-icon>
+                <span class="example-element-weight">
+                  {{ element.ext_color }}
+                </span>
+              </div>
+              <div>
+                <mat-icon svgIcon="price"></mat-icon>
+                <span>{{ element.price }}$</span>
+              </div>
+              <div>
+                <mat-icon svgIcon="car-seat"></mat-icon>
+                <span>{{ element.numb_seats }} seats</span>
+              </div>
+            </div>
+
+            <div
+              *ngIf="element.id != deleteId"
+              [ngClass]="
+                screenService.isLarge() ? 'actions' : 'actions actionsS'
+              "
+            >
+              <button
+                mat-stroked-button
+                color="primary"
+                (click)="showCarDetail(element.id)"
+              >
+                Details
+              </button>
+              <button
+                mat-stroked-button
+                color="accent"
+                (click)="editCar(element.id)"
+              >
+                Edit
+              </button>
+              <button
+                mat-stroked-button
+                color="warn"
+                (click)="deleteCarQuestion(element.id)"
+              >
+                Delete
+              </button>
+            </div>
+
+            <div
+              *ngIf="element.id === deleteId && !isDeleting"
+              [ngClass]="
+                screenService.isLarge() ? 'actions' : 'actions actionsS'
+              "
+            >
+              <button
+                mat-stroked-button
+                color="accent"
+                (click)="cancelDelete()"
+              >
+                Cancel
+              </button>
+              <button
+                mat-stroked-button
+                color="warn"
+                (click)="deleteCar(element.id)"
+              >
+                Delete
+              </button>
+              Delete this car?
+              <p *ngIf="deleteError">{{ deleteError }}</p>
+            </div>
+            <div
+              *ngIf="element.id === deleteId && isDeleting"
+              [ngClass]="
+                screenService.isLarge() ? 'actions' : 'actions actionsS'
+              "
+            >
+              Deleting....
+              <mat-spinner></mat-spinner>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let element; columns: displayedColumns"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      [ngClass]="
+        screenService.isLarge()
+          ? 'example-detail-row'
+          : 'example-detail-row small'
+      "
+    ></tr>
+  </table>
+
+  <mat-toolbar>
+    <mat-toolbar-row class="mat-elevation">
+      <button mat-mini-fab color="primary" (click)="createCar()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <span fxFlex></span>
+      <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
+
+<app-bar-chart></app-bar-chart>

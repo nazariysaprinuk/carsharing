@@ -1,0 +1,163 @@
+<div class="title">
+  <section class="title-container">
+    <div class="title-info">
+      <div class="operation">
+        <span>
+          <div [ngSwitch]="operation">
+            <div *ngSwitchCase="'details'">
+              Reading panel
+              <button mat-icon-button (click)="onEdit()">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+            <div *ngSwitchCase="'create'">Adding panel</div>
+            <div *ngSwitchCase="'edit'">Editing panel</div>
+          </div>
+        </span>
+      </div>
+
+      <div class="titleText">
+        <span>
+          {{ form.value.name + " " + form.value.model + " " + form.value.date }}
+        </span>
+      </div>
+
+      <star-rating
+        value="4"
+        totalstars="5"
+        checkedcolor="#ffb733"
+        uncheckedcolor="silver"
+        size="24px"
+        readonly="true"
+        (rate)="onRate($event)"
+      ></star-rating>
+
+      <mat-chip-list>
+        <mat-chip>{{ form.value.type }}</mat-chip>
+        <mat-chip color="primary" selected>{{
+          form.value.engine.fuel_type
+        }}</mat-chip>
+        <mat-chip color="warn" selected>{{
+          form.value.engine.transmission
+        }}</mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div class="mobile-phone">
+      <img src="assets/others/iphonex.png" width="300" />
+    </div>
+  </section>
+</div>
+
+<mat-tab-group dynamicHeight color="primary" backgroundColor="accent">
+  <mat-tab label="All about the car">
+    <div>
+      <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <mat-card class="flex-container">
+          <mat-header>
+            <div *ngFor="let field of vmDefinition">
+              <spa-dynamic-field
+                *ngIf="field.type === 'image'"
+                [field]="field"
+                [form]="form"
+                [operation]="operation"
+                [submitted]="submitted"
+              ></spa-dynamic-field>
+            </div>
+            <!-- GavnoCode Start!!! -->
+            <div class="header">
+              <span>Сharacteristics</span>
+            </div>
+            <div class="container">
+              <img src="assets/others/engine.png" width="250" height="250" />
+              <div class="engine">
+                <div>
+                  <span>Engine:</span>
+                </div>
+                <div>
+                  <mat-icon svgIcon="shifter"></mat-icon>
+                  <span>{{ form.value.engine.transmission }}</span>
+                </div>
+                <div>
+                  <mat-icon
+                    [svgIcon]="
+                      form.value.engine.fuel_type === 'Electric'
+                        ? 'battery'
+                        : 'car-engine'
+                    "
+                  ></mat-icon>
+                  <span
+                    >{{ form.value.engine.fuel_type }},
+                    {{
+                      form.value.engine.fuel_type === "Electric"
+                        ? form.value.engine.cubic_capacity + "kW"
+                        : form.value.engine.cubic_capacity / 1000 + "л."
+                    }}</span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- GavnoCode End!!! -->
+
+            
+          </mat-header>
+          <mat-content>
+            <div *ngFor="let field of vmDefinition">
+              <spa-dynamic-field
+                *ngIf="field.type != 'image'"
+                [field]="field"
+                [form]="form"
+                [operation]="operation"
+                [submitted]="submitted"
+              ></spa-dynamic-field>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <mat-card-actions *ngIf="status != 'waiting'">
+              <div *ngIf="operation === 'details'">
+                <button mat-stroked-button color="accent" (click)="onBack()">
+                  Go back
+                </button>
+                <button mat-stroked-button color="warn" (click)="onEdit()">
+                  Edit
+                </button>
+              </div>
+              <div *ngIf="operation === 'edit'">
+                <button mat-stroked-button color="accent" (click)="onCancel()">
+                  Cancel
+                </button>
+                <button mat-stroked-button color="primary" (click)="onSave()">
+                  Save
+                </button>
+              </div>
+              <div *ngIf="operation === 'create'">
+                <button mat-stroked-button color="accent" (click)="onBack()">
+                  Go back
+                </button>
+                <button mat-stroked-button color="primary" (click)="onCreate()">
+                  Create
+                </button>
+              </div>
+            </mat-card-actions>
+            <div *ngIf="status === 'waiting'">
+              Waiting...
+            </div>
+
+          </mat-content>
+        </mat-card>
+      </form>
+    </div>
+  </mat-tab>
+  <mat-tab label="Photos">
+    <div class="example-large-box mat-elevation-z4">
+      Photos
+    </div>
+  </mat-tab>
+  <mat-tab label="Reviews">
+    <div class="example-large-box mat-elevation-z4">
+      Reviews
+    </div>
+  </mat-tab>
+</mat-tab-group>

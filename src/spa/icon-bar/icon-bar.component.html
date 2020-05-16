@@ -1,0 +1,4 @@
+<a *ngFor="let icon of appConfigService.socialIcons" 
+    [href]="icon.url" [title]="icon.alt" target="_blank">
+    <mat-icon class="example-icon" [svgIcon]="icon.name"></mat-icon>
+</a>

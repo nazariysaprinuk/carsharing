@@ -1,0 +1,9 @@
+<mat-toolbar [ngClass]="!menuService.isVertical && screenService.isLarge() ?'container':'container-fluid'">
+  <mat-toolbar-row>
+    <div>&copy; {{ year }} {{ title }}</div>
+    <span fxFlex></span>
+    <div>
+      <spa-icon-bar></spa-icon-bar>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

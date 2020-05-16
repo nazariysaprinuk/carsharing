@@ -1,0 +1,35 @@
+<div>
+  <span *ngFor="let item of menuService.items">
+    <!-- Handle branch node buttons here -->
+    <span *ngIf="item.submenu && item.submenu.length > 0">
+      <button mat-button [matMenuTriggerFor]="menu.childMenu">
+        {{ item.text }}
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <spa-popup-menu
+        #menu
+        [menu]="item.submenu"
+        [ngClass]="{ 'vertical-menu': menuService.isVertical }"
+      ></spa-popup-menu>
+    </span>
+    <!-- Leaf node buttons here -->
+    <span *ngIf="!item.submenu || item.submenu.length === 0">
+      <button mat-button [routerLink]="item.route" routerLinkActive='active'>
+        {{ item.text }}
+      </button>
+    </span>
+  </span>
+</div>
+
+<div [ngClass]="menuService.isVertical ? 'dropup' : 'dropleft'">
+  <button
+    mat-icon-button
+    color="primary"
+    *ngIf="!menuService.showVerticalMenu"
+    (click)="menuService.toggleOrientation(); navService.openNav();"
+  >
+    <mat-icon>{{
+      !menuService.isVertical ? "keyboard_arrow_left" : "keyboard_arrow_up"
+    }}</mat-icon>
+  </button>
+</div>

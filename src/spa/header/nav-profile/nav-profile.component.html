@@ -1,0 +1,27 @@
+<div
+  [ngClass]="{ forSmall: !showIcon }"
+  *ngIf="appConfigService.showUserControl"
+>
+  <div class="user-control">
+    <a mat-icon-button routerLink="/profile" routerLinkActive="active"
+      ><div mat-card-avatar class="example-header-image"></div
+    ></a>
+    <button
+      mat-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+    >
+      <span>Profile</span>
+      <mat-icon>expand_more</mat-icon>
+
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <span>Account</span>
+      </button>
+      <button mat-menu-item routerLink="." (click)="signOut()">
+        <span>Sign out</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>

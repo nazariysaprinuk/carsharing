@@ -1,0 +1,88 @@
+<div class="background"></div>
+<div class="register-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Register</mat-card-title>
+      </mat-card-header>
+  
+      <form (ngSubmit)="onSubmit(signUpForm)" class="example-form" #registerForm='ngForm'>
+  
+        <mat-card-content>
+
+          <!-- <mat-form-field class="example-full-width">
+            <input autocomplete="off" name="name" matInput placeholder="Username" #name='ngModel'>
+            <div class="alert alert-danger" [hidden]='name.valid || name.pristine '>Please enter your name</div>
+          </mat-form-field>
+          
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Email" autocomplete="off" name='email' required #email='ngModel'>
+            <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="emailFormControl.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+   -->
+          <mat-form-field class="example-full-width">
+            <input matInput color="accent" placeholder="Password" [type]="hide1 ? 'password' : 'text'" name="password" required
+            ngModel #password='ngModel'>
+            <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
+            <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <div class="alert alert-danger" [hidden]='password.valid || password.pristine '>Password is required</div>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <input matInput color="accent" placeholder="Confirm password" [type]="hide2 ? 'password' : 'text'" name="confirm-password"
+            ngModel #password='ngModel'>
+            <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
+            <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <!-- <div class="alert alert-danger" [hidden]='confirm-password.valid || confirm-password.pristine '>Password is required</div> -->
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <input matInput [matDatepicker]="picker" placeholder="Date of birth — mm/dd/yyyy">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-radio-group aria-label="Select an option" color=primary>
+            <mat-radio-button value="Male">Male</mat-radio-button>
+            <mat-radio-button value="Female">Female</mat-radio-button>
+            <mat-radio-button value="Non-binary">Non-binary</mat-radio-button>
+          </mat-radio-group>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Choose a role...</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option [value]="roles" *ngFor="let roles of Roles">{{roles}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-checkbox color=primary>Share my registration data with Carsharing's content providers for marketing purposes.</mat-checkbox>
+
+        </mat-card-content>
+        <div class="sign-up">
+          <button mat-raised-button color="primary" class="btn-block">{{ 'Sign up' | uppercase }}</button>
+        </div>
+        <div class="sign-in">
+          <span>Already have an account?</span>
+          <a mat-button color="primary" routerLink="/sign-in" routerLinkActive="active">{{ 'Log in' }}</a>
+        </div>
+  
+        <div *ngIf="formError" [ngClass]="{ 'alert': formError, 'alert-danger': formError.type === 'error' }">{{formError}}</div>
+        <div *ngIf="!regstering && !hasAdded"></div>
+        <div *ngIf="regstering && !hasAdded">
+          <span>Registering new user ...</span> 
+          <mat-spinner></mat-spinner>
+        </div>
+        <div *ngIf="hasAdded">
+          <span>New user has added to database</span> 
+          <mat-spinner></mat-spinner>
+        </div>
+      </form>
+    </mat-card> 
+  </div>

@@ -1,0 +1,17 @@
+<a [ngStyle]="{'padding-left': (depth * 16) + 'px', 'padding-right': '16px'}" (click)="onItemSelected(item)"
+   [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}"
+   class="menu-list-item">
+  <mat-icon *ngIf="item.icon" class="routeIcon">{{item.icon}}</mat-icon>
+  <span>{{item.text}}</span> 
+  <span fxFlex *ngIf="item.submenu && item.submenu.length">
+    <span fxFlex></span>
+    <mat-icon [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+      expand_more
+    </mat-icon>
+  </span>
+</a>
+<div *ngIf="expanded">
+  <spa-sidebar-menu *ngFor="let child of item.submenu" [item]="child" [depth]="depth+1">
+  </spa-sidebar-menu>
+</div>
+

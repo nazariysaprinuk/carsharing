@@ -1,0 +1,31 @@
+:host {
+  height: 60px;
+  text-align: right;
+  padding-top: 6px;
+  color: #eee;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+div {
+  display: inline;
+  margin-left: 30px;
+  font-size: 22px;
+  vertical-align: middle;
+}
+
+a {
+  text-decoration: none;
+}
+
+mat-icon {
+  width: 33px;
+  height: 33px;
+  margin-left: 10px;
+}
+
+span {
+  margin-right: 10px;
+}
+

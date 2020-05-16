@@ -1,0 +1,22 @@
+:host {
+    min-height: 30px;
+    float: right;
+    width: 100%;
+    left: 0;
+}
+mat-toolbar {
+    /* margin-left: -258px; */
+    /* margin-right: -258px; */
+    position: relative;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.75);
+    height: 500px;
+}
+div {
+    margin: 5;
+    color: #ddd;
+}
+
+.container {
+    padding: 0 10vw;
+}
