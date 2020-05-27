@@ -10,9 +10,9 @@ import { NavService } from "../services/nav.service";
 })
 export class HeaderComponent implements OnInit {
   constructor(
-    private screenService: ScreenService,
-    private menuService: MenuService,
-    private navService: NavService
+    public screenService: ScreenService,
+    public menuService: MenuService,
+    public navService: NavService
   ) {}
 
   ngOnInit() {}

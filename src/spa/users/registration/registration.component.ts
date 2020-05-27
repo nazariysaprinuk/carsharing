@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 
@@ -16,6 +16,14 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class RegistrationComponent implements OnInit {
 
+  @Input() selected
+  @Input() hide1
+  @Input() hide2
+  @Input() Roles
+  @Input() formError
+  @Input() regstering
+  @Input() hasAdded
+
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -23,9 +31,14 @@ export class RegistrationComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-  constructor() { }
+  constructor(signUpForm: NgForm) {
+
+  }
 
   ngOnInit() {
   }
 
+  onSubmit() { }
+
 }
+ 

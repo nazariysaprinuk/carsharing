@@ -18,10 +18,10 @@ import { UserApi } from '../users/users-api';
 export class ContentComponent implements AfterViewInit {
   @ViewChild("appDrawer", { static: false }) appDrawer: ElementRef;
   constructor(
-    private menuService: MenuService,
-    private screenService: ScreenService,
-    private navService: NavService,
-    private userApi: UserApi
+    public menuService: MenuService,
+    public screenService: ScreenService,
+    public navService: NavService,
+    public userApi: UserApi
   ) {}
 
   ngAfterViewInit() {

@@ -26,12 +26,12 @@ export class DynamicFieldComponent implements OnInit, OnChanges {
 
   imageURL: string;
   __pathtocars = "assets/cars/";
-  private _album: Array<any> = [];
+  public _album: Array<any> = [];
   get isValid() {
     return this.form.controls[this.field.key].valid;
   }
 
-  constructor(private lightboxService: LightboxService, public fb: FormBuilder) {}
+  constructor(public lightboxService: LightboxService, public fb: FormBuilder) {}
 
   ngOnInit() {
     if (!this.form.value.image) {

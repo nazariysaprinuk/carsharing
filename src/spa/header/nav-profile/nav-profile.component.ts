@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SpaConfigService } from 'src/spa/services/spa-config.service';
 import { UserApi } from 'src/spa/users/users-api';
 
@@ -10,7 +10,9 @@ import { UserApi } from 'src/spa/users/users-api';
 export class NavProfileComponent implements OnInit {
   showLoader: boolean; 
 
-  constructor(private appConfigService: SpaConfigService, private userApi: UserApi) { }
+  @Input() showIcon
+
+  constructor(public appConfigService: SpaConfigService, private userApi: UserApi) { }
 
   ngOnInit() {
     this.showLoader = false;

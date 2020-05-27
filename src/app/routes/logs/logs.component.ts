@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { LogService } from '../../services/log.service';
@@ -14,6 +14,8 @@ import { Order } from 'src/app/services/order-interface';
 })
 export class LogsComponent implements OnInit {
 
+  @Input() expandedElement
+
   orderList: Array<any>
   displayedColumns: string[] = ["id", "car_name", "tenet_name", "price_per_day", "start_date", "end_date", "status"];
   dataSource: MatTableDataSource<Order>;
@@ -25,7 +27,7 @@ export class LogsComponent implements OnInit {
     private logService: LogService,
     private menuService: MenuService,
     private spaConfigService: SpaConfigService,
-    private screenService: ScreenService
+    public screenService: ScreenService
   ) {
     this.logService.getOrders().subscribe(data => {
       if (data) {

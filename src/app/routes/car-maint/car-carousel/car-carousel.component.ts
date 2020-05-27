@@ -10,7 +10,7 @@ import { ScreenService } from "src/spa/services/screen.service";
 export class CarCarouselComponent implements OnInit {
   slides = new Array<string>();
 
-  constructor(private screenService: ScreenService) {}
+  constructor(public screenService: ScreenService) {}
 
   ngOnInit() {
     for (let i = 1; i <= 5; i++) {

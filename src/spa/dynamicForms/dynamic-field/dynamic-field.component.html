@@ -62,7 +62,7 @@
             <img
               class="image"
               [src]="
-                imageURL && ! lightboxService.album[0].thumb !== ''
+                imageURL && lightboxService.album[0].thumb !== ''
                   ? imageURL
                   : lightboxService.album[0].thumb
               "
@@ -85,13 +85,13 @@
             [id]="field.key"
             [readonly]="operation === 'details' || field.isId"
             type="number"
-            [ngStyle]="{ display: none }"
+            style="display: none"
           />
           <div class="imagePreview">
             <img
               class="image"
               [src]="
-                imageURL && !_album[0].thumb !== ''
+                imageURL && _album[0].thumb
                   ? imageURL
                   : lightboxService.album[0].thumb
               "

@@ -11,8 +11,8 @@ export class FooterComponent implements OnInit {
   title: string = "All rights reserved";
   year = new Date().getFullYear();
   constructor(
-    private screenService: ScreenService,
-    private menuService: MenuService
+    public screenService: ScreenService,
+    public menuService: MenuService
   ) {}
 
   ngOnInit() {}

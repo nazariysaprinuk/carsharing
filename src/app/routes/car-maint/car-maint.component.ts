@@ -69,7 +69,7 @@ export class CarMaintComponent implements OnInit {
     private appDataService: AppDataService,
     private menuService: MenuService,
     private spaConfigService: SpaConfigService,
-    private screenService: ScreenService,
+    public screenService: ScreenService,
     private logService: LogService,
   ) {
     this.appDataService.getCars().subscribe(data => {

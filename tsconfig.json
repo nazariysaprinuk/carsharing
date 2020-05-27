@@ -1,6 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@angular/*": [ "node_modules/@angular/*"]
+    },
     "skipLibCheck": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",

@@ -9,7 +9,7 @@ import { NavService } from 'src/spa/services/nav.service';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private menuService: MenuService, private navService: NavService) { }
+  constructor(public menuService: MenuService, public navService: NavService) { }
 
   ngOnInit() {
   }

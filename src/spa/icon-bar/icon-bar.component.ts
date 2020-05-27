@@ -8,7 +8,7 @@ import { UserApi } from '../users/users-api';
   styleUrls: ['./icon-bar.component.css']
 })
 export class IconBarComponent implements OnInit {
-  constructor(private appConfigService: SpaConfigService) { }
+  constructor(public appConfigService: SpaConfigService) { }
 
   ngOnInit() {
   }
