@@ -12,7 +12,7 @@ import { from } from "rxjs";
 export class CarDetailComponent implements OnInit {
   car: Car;
   carDefinitionInput: Array<FieldInput> = [
-    { key: "id", type: "number", isId: true, label: "Id", required: true },
+    { key: "id", type: "string", isId: true, label: "Id", required: true },
     {
       key: "name",
       type: "string",
@@ -120,7 +120,7 @@ export class CarDetailComponent implements OnInit {
     this.operation = this.route.snapshot.params["operation"];
     if (this.operation === "create") {
       this.car = {
-        id: 0,
+        id: '0',
         name: "",
         model: "",
         date: null,
@@ -135,13 +135,27 @@ export class CarDetailComponent implements OnInit {
       };
     } else {
       this.appDataService
-        .getCar(+this.route.snapshot.params["id"])
-        .subscribe((car: Car) => (this.car = car));
+        .getCar(this.route.snapshot.params["id"])
+        .subscribe((car) => {
+          this.car = {
+            id: car.payload.id,
+            name: car.payload.data()['name'],
+            model: car.payload.data()['model'],
+            date: car.payload.data()['date'],
+            type: car.payload.data()['type'],
+            numb_seats: car.payload.data()['numb_seats'],
+            engine: car.payload.data()['engine'],
+            price: car.payload.data()['price'],
+            image: car.payload.data()['image'],
+            location: car.payload.data()['location'],
+            ext_color: car.payload.data()['ext_color'],
+            orders: car.payload.data()['orders'],
+          }
+        });
     }
   }
 
   createCar(car: Car) {
-    car.id = 0;
     this.errorMessage = null;
     this.appDataService.createCar(car).subscribe(
       c => this.router.navigate(["/authenticated/car-maint"]),

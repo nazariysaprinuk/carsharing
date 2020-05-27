@@ -106,7 +106,7 @@
                 ></mat-icon>
                 <mat-icon
                   *ngIf="
-                    element.type === 'Saloon' ||
+                    element.type === 'Sedan' ||
                     element.type === 'Coupe' ||
                     element.type === 'EstateCar'
                   "
@@ -167,6 +167,13 @@
                 screenService.isLarge() ? 'actions' : 'actions actionsS'
               "
             >
+              <button
+                mat-stroked-button
+                color="success"
+                (click)="selectCar(element.id)"
+              >
+                Select
+              </button>
               <button
                 mat-stroked-button
                 color="primary"

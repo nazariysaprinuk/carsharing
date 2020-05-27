@@ -14,6 +14,9 @@ import {
 import { SpaConfigService } from "src/spa/services/spa-config.service";
 import { ScreenService } from "src/spa/services/screen.service";
 import { SelectionModel } from "@angular/cdk/collections";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, Action, DocumentSnapshot } from '@angular/fire/firestore'
+import { LogService } from 'src/app/services/log.service';
+import { Order } from 'src/app/services/order-interface';
 
 @Component({
   selector: "app-car-maint",
@@ -32,7 +35,7 @@ import { SelectionModel } from "@angular/cdk/collections";
 })
 export class CarMaintComponent implements OnInit {
   
-  carList: Array<Car>;
+  carList: Array<any>;
   deleteError: string;
   deleteId: number;
   isDeleting = false;
@@ -66,14 +69,36 @@ export class CarMaintComponent implements OnInit {
     private appDataService: AppDataService,
     private menuService: MenuService,
     private spaConfigService: SpaConfigService,
-    private screenService: ScreenService
+    private screenService: ScreenService,
+    private logService: LogService,
   ) {
-    appDataService.getCars().subscribe(data => {
-      this.carList = data;
-      this.dataSource = new MatTableDataSource(this.carList);
-    });
-
-    this.icons.forEach(icon => this.spaConfigService.addSvgIcon(icon));
+    this.appDataService.getCars().subscribe(data => {
+      if (data) {
+        this.carList = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            name: e.payload.doc.data()['name'],
+            model: e.payload.doc.data()['model'],
+            date: e.payload.doc.data()['date'],
+            type: e.payload.doc.data()['type'],
+            numb_seats: e.payload.doc.data()['numb_seats'],
+            engine: e.payload.doc.data()['engine'],
+            price: e.payload.doc.data()['price'],
+            image: e.payload.doc.data()['image'],
+            location: e.payload.doc.data()['location'],
+            ext_color: e.payload.doc.data()['ext_color'],
+            orders: e.payload.doc.data()['orders'],
+          }
+        })
+        // 
+        this.dataSource = new MatTableDataSource(this.carList);
+        this.icons.forEach(icon => this.spaConfigService.addSvgIcon(icon));
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    })
+      // this.carList = data;
+    
   }
 
   applyFilter(filterValue: string) {
@@ -84,9 +109,13 @@ export class CarMaintComponent implements OnInit {
     }
   }
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    if (this.selection.selected && this.dataSource && this.dataSource.hasOwnProperty('data')) {
+      const numSelected = this.selection.selected.length;
+      const numRows = this.dataSource.data.length;
+      return numSelected === numRows;
+    } else {
+      return false
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -101,18 +130,15 @@ export class CarMaintComponent implements OnInit {
     if (!row) {
       return `${this.isAllSelected() ? "select" : "deselect"} all`;
     }
-    return `${
-      this.selection.isSelected(row) ? "deselect" : "select"
-    } row ${row.id + 1}`;
+    return `${ this.selection.isSelected(row) ? "deselect" : "select" } row '${row.id + 1}'`;
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    
   }
 
   createCar() {
-    this.router.navigate(["/authenticated/car-detail", 0, "create"]);
+    this.router.navigate(["/authenticated/car-detail", "create"]);
   }
   showCarDetail(id: number) {
     this.router.navigate(["/authenticated/car-detail", id, "details"]);
@@ -120,7 +146,7 @@ export class CarMaintComponent implements OnInit {
   editCar(id: number) {
     this.router.navigate(["/authenticated/car-detail", id, "edit"]);
   }
-  deleteCarQuestion(id: number) {
+  deleteCarQuestion(id) {
     this.deleteError = null;
     this.deleteId = id;
   }
@@ -128,7 +154,7 @@ export class CarMaintComponent implements OnInit {
     this.isDeleting = false;
     this.deleteId = null;
   }
-  deleteCar(id: number) {
+  deleteCar(id) {
     this.isDeleting = true;
     this.appDataService.deleteCar(id).subscribe(
       car => {
@@ -141,5 +167,22 @@ export class CarMaintComponent implements OnInit {
         this.isDeleting = false;
       }
     );
+  }
+  selectCar(id) {
+    const date = new Date()
+    const subscription = this.appDataService.getCar(id).subscribe((car: Action<DocumentSnapshot<Car>>) => {
+      this.logService.createOrder({
+        id: '1',
+        car_name: `${car.payload.data()['name']} ${car.payload.data()['model']}`,
+        tenet_name: 'Nazariy',
+        status: 'Panding',
+        price_per_day: 50,
+        start_date: `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`,
+        end_date: `${31 - +String(date.getDate()).padStart(2, '0') + 5}/${String(date.getMonth() + 2).padStart(2, '0')}/${date.getFullYear()}`
+      })
+      this.appDataService.updateCar({ ...car.payload.data(), orders: +car.payload.data()['orders'] ? +car.payload.data()['orders'] + 1  : 0 + 1, id: car.payload.id})
+      subscription.unsubscribe()
+      this.router.navigate(["/authenticated/logs"]);
+    })
   }
 }

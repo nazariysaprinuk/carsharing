@@ -8,6 +8,7 @@ import { AuthenticatedComponent } from "./authenticated/authenticated.component"
 import { SignInComponent } from "../../spa/users/sign-in/sign-in.component";
 import { RegistrationComponent } from "../../spa/users/registration/registration.component";
 import { PasswordResetComponent } from "../../spa/users/password-reset/password-reset.component";
+import { LogsComponent } from "./logs/logs.component"
 import { AuthGuard } from "../services/auth-guard.service";
 
 export const appRoutes: Routes = [
@@ -20,15 +21,17 @@ export const appRoutes: Routes = [
     children: [
       {
         path: "",
-        // canActivateChild: [AuthGuard],
+        canActivateChild: [AuthGuard],
         children: [
-          // { path: "", canActivateChild: [AuthGuard],children: [
+          { path: "", canActivateChild: [AuthGuard],children: [
             { path: "home", component: HomeComponent },
             { path: "settings", component: SettingsComponent },
+            { path: "car-detail/:operation", component: CarDetailComponent },
             { path: "car-detail/:id/:operation", component: CarDetailComponent },
             { path: "car-list/:count", component: CarListComponent },
-            { path: "car-maint", component: CarMaintComponent }
-          // ]}
+            { path: "car-maint", component: CarMaintComponent },
+            { path: "logs", component: LogsComponent }
+          ]}
         ]
       }
     ]

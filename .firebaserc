@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "carsharing-kursova": {
+      "hosting": {
+        "carsharing": [
+          "carsharing-kursova"
+        ]
+      }
+    }
+  }
+}

@@ -32,7 +32,7 @@ export class SignInComponent implements OnInit {
         .signIn(signInForm.value.username, signInForm.value.password)
         .subscribe(
           data => {
-            this.router.navigate(["/authenticated"]);
+            this.router.navigate(["/authenticated/car-maint"]);
           },
           error => {
             this.submitting = false;

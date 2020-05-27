@@ -121,9 +121,16 @@
               "devServerTarget": "carsharing:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }
   },
-  "defaultProject": "carsharing"
+  "defaultProject": "carsharing",
+  "cli": {
+    "analytics": "8ce9ec37-439a-4f3a-8530-7b62f2643fa3"
+  }
 }

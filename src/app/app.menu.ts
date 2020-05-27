@@ -81,5 +81,11 @@ export const AppMenuItems: Array<MenuItem> = [
     icon: "home",
     route: "/authenticated/home",
     submenu: null
+  },
+  {
+    text: "Logs",
+    icon: "logs",
+    route: "/authenticated/logs",
+    submenu: null
   }
 ];

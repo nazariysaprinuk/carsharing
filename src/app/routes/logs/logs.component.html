@@ -1,0 +1,28 @@
+<div class="mat-elevation">
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="{{ column }}" *ngFor="let column of displayedColumns">
+            <div>
+                <div *ngIf="column !== 'select'">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      {{ column | uppercase }}
+                    </th>
+                    <!-- [ngClass]="screenService.isLarge() ? 'element-detail' : ''" -->
+                    <td mat-cell *matCellDef="let row" class="element-detail">
+                      {{ row[column] }}
+                    </td>
+                  </div>
+            </div>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"></tr>
+        <tr mat-row [ngClass]="
+            screenService.isLarge()
+            ? 'example-detail-row'
+            : 'example-detail-row small'
+        "></tr>
+
+    </table>
+</div>

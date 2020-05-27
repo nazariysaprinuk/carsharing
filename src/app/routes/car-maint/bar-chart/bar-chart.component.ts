@@ -35,11 +35,29 @@ export class BarChartComponent implements OnInit, OnChanges {
     private chartService: ChartService,
     private appDataService: AppDataService
   ) {
-    appDataService.getCars().subscribe(data => (this.carList = data));
+      appDataService.getCars().subscribe(data => {
+        this.carList = data.map(e => {
+          return {
+            id: e.payload.doc.id,
+            name: e.payload.doc.data()['name'],
+            model: e.payload.doc.data()['model'],
+            date: e.payload.doc.data()['date'],
+            type: e.payload.doc.data()['type'],
+            numb_seats: e.payload.doc.data()['numb_seats'],
+            engine: e.payload.doc.data()['engine'],
+            price: e.payload.doc.data()['price'],
+            image: e.payload.doc.data()['image'],
+            location: e.payload.doc.data()['location'],
+            ext_color: e.payload.doc.data()['ext_color'],
+            orders: e.payload.doc.data()['orders'],
+          }
+        })
+        this._data();
+    });
   }
 
   ngOnInit() {
-    this._data();
+    
   }
 
   _data() {
