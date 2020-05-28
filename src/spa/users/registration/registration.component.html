@@ -5,11 +5,11 @@
         <mat-card-title>Register</mat-card-title>
       </mat-card-header>
   
-      <form (ngSubmit)="onSubmit()" class="example-form" #registerForm='ngForm'>
+      <form (ngSubmit)="onSubmit(registerForm)" class="example-form" #registerForm='ngForm'>
   
         <mat-card-content>
 
-          <!-- <mat-form-field class="example-full-width">
+          <mat-form-field class="example-full-width">
             <input autocomplete="off" name="name" matInput placeholder="Username" #name='ngModel'>
             <div class="alert alert-danger" [hidden]='name.valid || name.pristine '>Please enter your name</div>
           </mat-form-field>
@@ -23,7 +23,7 @@
               Email is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-   -->
+  
           <mat-form-field class="example-full-width">
             <input matInput color="accent" placeholder="Password" [type]="hide1 ? 'password' : 'text'" name="password" required
             ngModel #password='ngModel'>

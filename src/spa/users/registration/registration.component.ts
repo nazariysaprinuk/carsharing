@@ -32,7 +32,7 @@ export class RegistrationComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   constructor(signUpForm: NgForm) {
-
+    signUpForm.value
   }
 
   ngOnInit() {

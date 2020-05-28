@@ -23,6 +23,19 @@ export class UserService implements UserApi {
       })
     );
   }
+  signUp(userCredential) {
+    return from(this.angularFireAuth.createUserWithEmailAndPassword(userCredential.email, userCredential.password))
+    .pipe(
+      map(credential => credential.user),
+      tap(user => {
+        this.isAuthenticated = true;
+        return of({}).pipe(delay(2000));
+      }),
+      catchError((error, obs) => {
+        return throwError('Invalid user credentials');;
+      })
+    )
+  }
   signOut(): Observable<any> {
       this.angularFireAuth.signOut()
       this.isAuthenticated = false;
