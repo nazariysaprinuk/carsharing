@@ -11,8 +11,7 @@ export class NavProfileComponent implements OnInit {
   showLoader: boolean; 
 
   @Input() showIcon
-
-  constructor(public appConfigService: SpaConfigService, private userApi: UserApi) { }
+  constructor(public appConfigService: SpaConfigService, public userApi: UserApi) { }
 
   ngOnInit() {
     this.showLoader = false;

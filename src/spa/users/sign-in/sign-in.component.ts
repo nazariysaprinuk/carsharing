@@ -18,10 +18,10 @@ export class SignInComponent implements OnInit {
   submitting: boolean = false;
   formError: string;
   constructor(
-    private alertService: AlertService,
-    private userApi: UserApi,
-    private userService: UserService,
-    private router: Router
+    public alertService: AlertService,
+    public userApi: UserApi,
+    public userService: UserService,
+    public router: Router
   ) {}
 
   onSubmit(signInForm: NgForm): void {

@@ -17,6 +17,7 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, Action, DocumentSnapshot } from '@angular/fire/firestore'
 import { LogService } from 'src/app/services/log.service';
 import { Order } from 'src/app/services/order-interface';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: "app-car-maint",
@@ -65,12 +66,13 @@ export class CarMaintComponent implements OnInit {
   dataSource: MatTableDataSource<Car>;
 
   constructor(
-    private router: Router,
-    private appDataService: AppDataService,
-    private menuService: MenuService,
-    private spaConfigService: SpaConfigService,
+    public router: Router,
+    public appDataService: AppDataService,
+    public menuService: MenuService,
+    public spaConfigService: SpaConfigService,
     public screenService: ScreenService,
-    private logService: LogService,
+    public logService: LogService,
+    public userService: UserService
   ) {
     this.appDataService.getCars().subscribe(data => {
       if (data) {
@@ -169,20 +171,31 @@ export class CarMaintComponent implements OnInit {
     );
   }
   selectCar(id) {
-    const date = new Date()
-    const subscription = this.appDataService.getCar(id).subscribe((car: Action<DocumentSnapshot<Car>>) => {
-      this.logService.createOrder({
-        id: '1',
-        car_name: `${car.payload.data()['name']} ${car.payload.data()['model']}`,
-        tenet_name: 'Nazariy',
-        status: 'Panding',
-        price_per_day: 50,
-        start_date: `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`,
-        end_date: `${31 - +String(date.getDate()).padStart(2, '0') + 5}/${String(date.getMonth() + 2).padStart(2, '0')}/${date.getFullYear()}`
-      })
-      this.appDataService.updateCar({ ...car.payload.data(), orders: +car.payload.data()['orders'] ? +car.payload.data()['orders'] + 1  : 0 + 1, id: car.payload.id})
-      subscription.unsubscribe()
-      this.router.navigate(["/authenticated/logs"]);
+    const start_date = new Date()
+    const end_date = new Date(new Date().getTime()+(7*24*60*60*1000))
+    const subscription = this.appDataService.getCar(id)
+      .subscribe((car: Action<DocumentSnapshot<Car>>) => {
+        this.userService.getCurrentUser()
+        .subscribe((data) => {
+          const ordersSubscription = this.logService.getOrders().subscribe((orders) => {
+            const findOrdder = orders.find(order => order.payload.doc.data()['car_name'] === `${car.payload.data()['name']} ${car.payload.data()['model']}`) 
+            this.logService.createOrder({
+              id: '',
+              car_name: `${car.payload.data()['name']} ${car.payload.data()['model']}`,
+              tenet_name: data.payload.data()['name'],
+              status: findOrdder && new Date(findOrdder.payload.doc.data()['end_date']).getTime() < start_date.getTime() ? 'Cancel' : 'Active',
+              price_per_day: car.payload.data()['price'] ? +car.payload.data()['price'] : 50,
+              start_date: `${String(start_date.getDate()).padStart(2, '0')}/${String(start_date.getMonth() + 1).padStart(2, '0')}/${start_date.getFullYear()} ${start_date.getUTCHours()}:${start_date.getMinutes()}`,
+              end_date: `${String(end_date.getDate()).padStart(2, '0')}/${String(end_date.getMonth() + 1).padStart(2, '0')}/${end_date.getFullYear()} ${start_date.getUTCHours()}:${start_date.getMinutes()}`,
+            })
+            this.appDataService.updateCar({ ...car.payload.data(), orders: +car.payload.data()['orders'] ? +car.payload.data()['orders'] + 1  : 0 + 1, id: car.payload.id})
+            ordersSubscription.unsubscribe()
+            subscription.unsubscribe()
+            this.router.navigate(["/authenticated/logs"]);  
+          }) 
+        }
+      )
+      
     })
   }
 }

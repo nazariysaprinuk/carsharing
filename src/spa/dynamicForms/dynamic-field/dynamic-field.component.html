@@ -91,7 +91,7 @@
             <img
               class="image"
               [src]="
-                imageURL && _album[0].thumb
+                imageURL && _album[0].thumb !== ''
                   ? imageURL
                   : lightboxService.album[0].thumb
               "

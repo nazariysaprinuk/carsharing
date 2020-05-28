@@ -330,7 +330,6 @@ export class AppDataService {
     return of(newCar);
   }
   updateCar(CarForUpdating: Car) {
-    console.log(CarForUpdating)
     const id = CarForUpdating.id
     delete CarForUpdating.id
     this.afs.collection('cars').doc(id).update(CarForUpdating)

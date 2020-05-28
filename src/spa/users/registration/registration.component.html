@@ -5,17 +5,17 @@
         <mat-card-title>Register</mat-card-title>
       </mat-card-header>
   
-      <form (ngSubmit)="onSubmit()" class="example-form" #registerForm='ngForm'>
+      <form (ngSubmit)="onSubmit(registerForm)" class="example-form" #registerForm='ngForm'>
   
         <mat-card-content>
 
-          <!-- <mat-form-field class="example-full-width">
-            <input autocomplete="off" name="name" matInput placeholder="Username" #name='ngModel'>
+          <mat-form-field class="example-full-width">
+            <input autocomplete="off" name="name" matInput placeholder="Username" required ngModel #name='ngModel'>
             <div class="alert alert-danger" [hidden]='name.valid || name.pristine '>Please enter your name</div>
           </mat-form-field>
           
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Email" autocomplete="off" name='email' required #email='ngModel'>
+            <input matInput placeholder="Email" autocomplete="off" name='email' required ngModel #email='ngModel'>
             <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
               Please enter a valid email address
             </mat-error>
@@ -23,7 +23,7 @@
               Email is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-   -->
+  
           <mat-form-field class="example-full-width">
             <input matInput color="accent" placeholder="Password" [type]="hide1 ? 'password' : 'text'" name="password" required
             ngModel #password='ngModel'>
@@ -31,15 +31,6 @@
             <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <div class="alert alert-danger" [hidden]='password.valid || password.pristine '>Password is required</div>
-          </mat-form-field>
-
-          <mat-form-field class="example-full-width">
-            <input matInput color="accent" placeholder="Confirm password" [type]="hide2 ? 'password' : 'text'" name="confirm-password"
-            ngModel #password='ngModel'>
-            <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
-            <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <!-- <div class="alert alert-danger" [hidden]='confirm-password.valid || confirm-password.pristine '>Password is required</div> -->
           </mat-form-field>
 
           <mat-form-field class="example-full-width">

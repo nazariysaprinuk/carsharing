@@ -103,7 +103,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   onCancel() {
     this.onBack();
   }
-  onSubmit() {}
   onSave() {
     this.submitted = true;
     if (this.form.valid) {
@@ -129,4 +128,5 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       this.create.emit(this.form.value);
     }
   }
+  onSubmit() {}
 }

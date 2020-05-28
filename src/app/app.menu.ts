@@ -7,37 +7,6 @@ export const AppMenuItems: Array<MenuItem> = [
     route: "/authenticated/cars",
     submenu: [
       {
-        text: "Select",
-        icon: "mouse",
-        route: "/authenticated/cars",
-        submenu: [
-          {
-            text: "Ferrari",
-            icon: "360",
-            route: "/authenticated/car-detail/ferrari",
-            submenu: null
-          },
-          {
-            text: "Bugatti",
-            icon: "360",
-            route: "/authenticated/car-detail/bugatti",
-            submenu: null
-          },
-          {
-            text: "Lamburghini",
-            icon: "360",
-            route: "/authenticated/car-detail/lamburghini",
-            submenu: null
-          },
-          {
-            text: "Maseratti",
-            icon: "360",
-            route: "/authenticated/car-detail/maseratti",
-            submenu: null
-          }
-        ]
-      },
-      {
         text: "Best one",
         icon: "directions_car",
         route: "/authenticated/car-list/1",
